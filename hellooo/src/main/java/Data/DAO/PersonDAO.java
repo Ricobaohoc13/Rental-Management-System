@@ -1,6 +1,6 @@
-package DAO;
+package Data.DAO;
 
-import Model.Person;
+import Data.Model.Person;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

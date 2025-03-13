@@ -1,4 +1,4 @@
-package Link;
+package Data.Link;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

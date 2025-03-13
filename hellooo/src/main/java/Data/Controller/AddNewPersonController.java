@@ -1,24 +1,30 @@
-package Controller;
+package Data.Controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import Model.Person;
-import DAO.PersonDAO;
-import Link.DatabaseConnection;
+import Data.Model.Person;
+import Data.DAO.PersonDAO;
+import Data.Link.DatabaseConnection;
+import javafx.stage.Stage;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class AddNewPersonController implements Initializable {
+public class AddNewPersonController {
 
     @FXML
     private Button addButton;
@@ -34,11 +40,6 @@ public class AddNewPersonController implements Initializable {
 
     @FXML
     private Label infoLabel;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // You could initialize things here if needed.
-    }
 
     /**
      * Event handler for the Add button.
@@ -82,6 +83,25 @@ public class AddNewPersonController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    @FXML
+    private void GoBack(ActionEvent event)
+    {
+        try {
+            URL fxmlUrl = getClass().getResource("/WelcomeScreen.fxml");
+            if (fxmlUrl == null)
+            {
+                throw new IOException("Can`t locate path");
+            }
+            Parent root = FXMLLoader.load(fxmlUrl);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }catch (IOException e)
+        {
+            e.printStackTrace();
         }
     }
 }

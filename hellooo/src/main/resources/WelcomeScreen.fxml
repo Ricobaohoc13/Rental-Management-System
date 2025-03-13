@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Data.Controller.WelcomeScreenController">
+   <children>
+      <Label layoutX="113.0" layoutY="53.0" text="Rental Management System">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Button layoutX="274.0" layoutY="141.0" mnemonicParsing="false" onAction="#LogIn" text="Log In" />
+      <Button layoutX="272.0" layoutY="200.0" mnemonicParsing="false" onAction="#SignUp" text="Sign up" />
+      <Button layoutX="283.0" layoutY="253.0" mnemonicParsing="false" onAction="#Exit" text="Exit" />
+   </children>
+</AnchorPane>
