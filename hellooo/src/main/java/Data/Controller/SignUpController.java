@@ -5,6 +5,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,19 +14,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+
 import Data.Model.Person;
 import Data.DAO.PersonDAO;
 import Data.Link.DatabaseConnection;
-import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-public class AddNewPersonController {
+public class SignUpController {
 
     @FXML
     private Button addButton;
@@ -34,6 +31,15 @@ public class AddNewPersonController {
 
     @FXML
     private DatePicker birthdayDatePicker;
+
+    @FXML
+    private PasswordField password;
+
+    @FXML
+    private PasswordField reenterPassword;
+
+    @FXML
+    private TextField verification;
 
     @FXML
     private TextField genderTextField;
@@ -59,11 +65,12 @@ public class AddNewPersonController {
         // Convert LocalDate to java.util.Date.
         Date birthday = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        // Create a new Person instance.
+        // Create a new Person instance and set its fields.
         Person newPerson = new Person();
         newPerson.setUsername(name);
-        newPerson.setGender(gender);
+        newPerson.setPassword(password.getText());
         newPerson.setBirthday(birthday);
+        newPerson.setGender(gender);
 
         // Connect to the database and attempt to insert the record.
         Connection connection = DatabaseConnection.connect();
@@ -86,21 +93,17 @@ public class AddNewPersonController {
         }
     }
     @FXML
-    private void GoBack(ActionEvent event)
-    {
+    private void GoBack(ActionEvent event) {
         try {
             URL fxmlUrl = getClass().getResource("/WelcomeScreen.fxml");
-            if (fxmlUrl == null)
-            {
-                throw new IOException("Can`t locate path");
+            if (fxmlUrl == null) {
+                throw new IOException("Can't locate path");
             }
             Parent root = FXMLLoader.load(fxmlUrl);
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
