@@ -14,16 +14,33 @@ public class WelcomeScreenController {
 
     @FXML
     private void LogIn(ActionEvent event) {
+        try
+        {
+            URL fxmlUrl = getClass().getResource("/LogInScreen.fxml");
+            if (fxmlUrl == null)
+            {
+                throw new IOException("Cannot locate LogInScreen.fxml. Check the path. ");
+            }
 
+            // Load the FXML and create a new root node
+            Parent root = FXMLLoader.load(fxmlUrl);
+
+            // Retrieve the current stage and switch the scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void SignUp(ActionEvent event) {
         try {
             // Get the resource for the FXML file
-            URL fxmlUrl = getClass().getResource("/AddNewPerson.fxml");
+            URL fxmlUrl = getClass().getResource("/SignUp.fxml");
             if (fxmlUrl == null) {
-                throw new IOException("Cannot locate AddNewPerson.fxml. Check the resource path.");
+                throw new IOException("Cannot locate SignUp.fxml. Check the path.");
             }
 
             // Load the FXML and create a new root node
