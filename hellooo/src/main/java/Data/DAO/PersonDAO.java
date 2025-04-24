@@ -18,13 +18,10 @@ public class PersonDAO implements DAO<Person> {
     @Override
     public void create(Person entity) {
         // If your schema requires case-sensitive names (as created with quotes), then use:
-        String query = "INSERT INTO \"Person\" (username, \"Password\", birthday, gender) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO \"Person\" (username, \"Password\") VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, entity.getUsername());
             stmt.setString(2, entity.getPassword());
-            // Convert from java.util.Date to java.sql.Date
-            stmt.setDate(3, new Date(entity.getBirthday().getTime()));
-            stmt.setString(4, entity.getGender());
 
             int affectedRows = stmt.executeUpdate();
             if (affectedRows > 0) {
@@ -50,8 +47,7 @@ public class PersonDAO implements DAO<Person> {
         }
     }
 
-    // New method to support login functionality
-    public Person getUserByUsernameAndPassword(String username, String password) {
+    public Person LogIn (String username, String password) {
         String query = "SELECT * FROM \"Person\" WHERE username = ? AND \"Password\" = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, username);
@@ -63,8 +59,6 @@ public class PersonDAO implements DAO<Person> {
                     person.setUsername(rs.getString("username"));
                     person.setPassword(rs.getString("Password"));
                     // Convert the SQL Date to java.util.Date if needed.
-                    person.setBirthday(new java.util.Date(rs.getDate("birthday").getTime()));
-                    person.setGender(rs.getString("gender"));
                     return person;
                 }
             }
